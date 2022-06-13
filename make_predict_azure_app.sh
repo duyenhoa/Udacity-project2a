@@ -25,5 +25,5 @@ curl -d '{
    }
 }'\
      -H "Content-Type: application/json" \
-     -X POST https://hoaproject2.azurewebsites.net:$PORT/predict 
+     -X POST https://yenhoaudacity.azurewebsites.net:$PORT/predict 
      #your application name <yourappname>goes here
