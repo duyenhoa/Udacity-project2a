@@ -25,7 +25,7 @@ variables:
   projectRoot: $(System.DefaultWorkingDirectory)
 
   # Python version: 3.7
-  pythonVersion: '3.7.13'
+  pythonVersion: '3.7'
 
 stages:
 - stage: Build
@@ -33,11 +33,14 @@ stages:
   jobs:
   - job: BuildJob
     pool:
+      vmImage: $(vmImageName)
       name: myAgentPool
     steps:
     - task: UsePythonVersion@0
       inputs:
         versionSpec: '$(pythonVersion)'
+        addToPath: true
+        architecture: 'x64'
       displayName: 'Use Python $(pythonVersion)'
 
     - script: |
