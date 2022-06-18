@@ -45,6 +45,7 @@ stages:
     - script: |
         python3 -m venv antenv
         source antenv/bin/activate
+        sudo apt install python3.7 -y
         python3 -m pip install --upgrade pip
         python3 -m pip install wheel
         pip install pandas
