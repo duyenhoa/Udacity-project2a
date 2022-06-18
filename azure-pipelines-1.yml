@@ -1,4 +1,15 @@
 # Python to Linux Web App on Azure
+- task: AzureWebApp@1
+  inputs:
+    azureSubscription: 'Azure subscription 1 (8c73b586-b7b0-460e-b8a1-7d59f3050c32)'
+    appType: 'webAppLinux'
+    appName: 'yenhoaudacity'
+    deployToSlotOrASE: true
+    resourceGroupName: 'yenhoa_infra_rg_2732'
+    slotName: 'production'
+    package: '$(System.DefaultWorkingDirectory)/**/*.zip'
+    runtimeStack: 'PYTHON|3.8'
+    
 # Build your Python project and deploy it to Azure as a Linux Web App.
 # Change python version to one thats appropriate for your application.
 # https://docs.microsoft.com/azure/devops/pipelines/languages/python
@@ -6,20 +17,18 @@
 trigger:
 - main
 
-pool: myAgentPool
-
 variables:
   # Azure Resource Manager connection created during pipeline creation
-  azureServiceConnectionId: 'ddf5fde9-c491-4e7a-9d28-7a84061dfbc7'
+  azureServiceConnectionId: 'b4b7d5d8-c28d-4220-921b-d248418b8d9d'
 
   # Web app name
-  webAppName: 'HoaUdacityProj2'
+  webAppName: 'yenhoaudacity'
 
   # Agent VM image name
   vmImageName: 'ubuntu-latest'
 
   # Environment name
-  environmentName: 'HoaUdacityProj2'
+  environmentName: 'yenhoaudacity'
 
   # Project root folder. Point to the folder containing manage.py file.
   projectRoot: $(System.DefaultWorkingDirectory)
@@ -33,24 +42,18 @@ stages:
   jobs:
   - job: BuildJob
     pool:
-      name: myAgentPool
+      vmImage: $(vmImageName)
     steps:
     - task: UsePythonVersion@0
       inputs:
         versionSpec: '$(pythonVersion)'
-        addToPath: true
-        architecture: 'x64'
       displayName: 'Use Python $(pythonVersion)'
 
     - script: |
-        python3.7 -m venv antenv
+        python -m venv antenv
         source antenv/bin/activate
-        sudo apt install python3.7 -y
-        python3.7 -m pip install --upgrade pip
-        python3.7 -m pip install wheel
-        pip install --upgrade setuptools pip wheel
-        pip install gensim
-        pip install pandas
+        python -m pip install --upgrade pip
+        pip install setup
         pip install -r requirements.txt
       workingDirectory: $(projectRoot)
       displayName: "Install requirements"
@@ -75,7 +78,7 @@ stages:
   jobs:
   - deployment: DeploymentJob
     pool:
-      name: myAgentPool
+      vmImage: $(vmImageName)
     environment: $(environmentName)
     strategy:
       runOnce:
@@ -88,7 +91,7 @@ stages:
             displayName: 'Use Python version'
 
           - task: AzureWebApp@1
-            displayName: 'Deploy Azure Web App : UdacityProject2Hoa'
+            displayName: 'Deploy Azure Web App : yenhoaudacity'
             inputs:
               azureSubscription: $(azureServiceConnectionId)
               appName: $(webAppName)
