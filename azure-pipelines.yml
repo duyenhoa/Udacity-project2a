@@ -75,7 +75,7 @@ stages:
   jobs:
   - deployment: DeploymentJob
     pool:
-      vmImage: $(vmImageName)
+      name: myAgentPool
     environment: $(environmentName)
     strategy:
       runOnce:
