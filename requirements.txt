@@ -1,6 +1,6 @@
 pylint
 pytest
-Clisk==7.0
+click==8.1.3
 setuptools==62.5.0
 smart_open==6.0.0
 scipy==1.7.3
