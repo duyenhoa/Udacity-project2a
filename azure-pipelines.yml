@@ -13,13 +13,13 @@ variables:
   azureServiceConnectionId: 'ddf5fde9-c491-4e7a-9d28-7a84061dfbc7'
 
   # Web app name
-  webAppName: 'hoaproj2'
+  webAppName: 'hoaudacityproj2'
 
   # Agent VM image name
   vmImageName: 'ubuntu-latest'
 
   # Environment name
-  environmentName: 'hoaproj2'
+  environmentName: 'hoaudacityproj2'
 
   # Project root folder. Point to the folder containing manage.py file.
   projectRoot: $(System.DefaultWorkingDirectory)
