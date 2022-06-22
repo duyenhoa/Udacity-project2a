@@ -6,20 +6,20 @@
 trigger:
 - main
 
-pool: myAgentPool
+pool: myAgentPoolExample
 
 variables:
   # Azure Resource Manager connection created during pipeline creation
   azureServiceConnectionId: 'ddf5fde9-c491-4e7a-9d28-7a84061dfbc7'
 
   # Web app name
-  webAppName: 'hoaudacityproj2'
+  webAppName: 'hoaUdacityproject1'
 
   # Agent VM image name
   vmImageName: 'ubuntu-latest'
 
   # Environment name
-  environmentName: 'hoaudacityproj2'
+  environmentName: 'hoaUdacityproject1'
 
   # Project root folder. Point to the folder containing manage.py file.
   projectRoot: $(System.DefaultWorkingDirectory)
@@ -33,7 +33,7 @@ stages:
   jobs:
   - job: BuildJob
     pool:
-      name: myAgentPool
+      name: myAgentPoolExample
     steps:
     - task: UsePythonVersion@0
       inputs:
@@ -88,7 +88,7 @@ stages:
             displayName: 'Use Python version'
 
           - task: AzureWebApp@1
-            displayName: 'Deploy Azure Web App : hoaUdacityproj2'
+            displayName: 'Deploy Azure Web App : hoaUdacityproject1'
             inputs:
               azureSubscription: $(azureServiceConnectionId)
               appName: $(webAppName)
