@@ -75,7 +75,7 @@ stages:
   jobs:
   - deployment: DeploymentJob
     pool:
-      name: myAgentPool
+      name: myAgentPoolExample
     environment: $(environmentName)
     strategy:
       runOnce:
