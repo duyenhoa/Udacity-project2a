@@ -1,3 +1,4 @@
+![Project2-Udacity-workflow](https://github.com/github/docs/actions/workflows/main_yenhoaudacity.yml/badge.svg)
 # Overview
 
 <TODO: complete this with an overview of your project>
