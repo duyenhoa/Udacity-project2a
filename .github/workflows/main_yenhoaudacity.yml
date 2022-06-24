@@ -58,6 +58,6 @@ jobs:
         uses: azure/webapps-deploy@v2
         id: deploy-to-webapp
         with:
-          app-name: 'yenhoaudacity'
+          app-name: 'main_yenhoaudacity.yml'
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_9FB128C341A040A5A8E28C946D2910C7 }}
