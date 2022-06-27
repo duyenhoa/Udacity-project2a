@@ -34,7 +34,8 @@
 
 
 * Output of a test run
-![image](https://user-images.githubusercontent.com/48123914/175457460-1027d79d-90c1-40a3-9b7c-c351dc3e78ce.png)
+![image](https://user-images.githubusercontent.com/48123914/175989651-709bd7d9-3abb-4a59-80fa-080a65b77efb.png)
+
 
 * Successful deploy of the project in Azure Pipelines.  [Note the official documentation should be referred to and double checked as you setup CI/CD](https://docs.microsoft.com/en-us/azure/devops/pipelines/ecosystems/python-webapp?view=azure-devops).
 * ![image](https://user-images.githubusercontent.com/48123914/175457725-7a80673f-31db-42e4-8e22-c14b09664d80.png)
