@@ -1,34 +1,17 @@
-from locust import HttpLocust, TaskSet, task
+import time
+from locust import HttpLocust, HttpUser, TaskSet, User, between, task
 
+class Myuser(User):
+    @task
+    def task(self):
+        print("execute task ")
 
-class UserBehavior(TaskSet):
-
-    def on_start(self):
-        self.login()
-
-    def login(self):
-        # GET login page to get csrftoken from it
-        response = self.client.get('/accounts/login/')
-        csrftoken = response.cookies['csrftoken']
-        # POST to login page with csrftoken
-        self.client.post('/accounts/login/',
-                         {'username': 'username', 'password': 'P455w0rd'},
-                         headers={'X-CSRFToken': csrftoken})
+class MyTask(HttpUser):
+    wait_time = between(1,5)
+    @task(2)
+    def task_1(self):
+        self.client.get("http://localhost:8000")
 
     @task(1)
-    def index(self):
-        self.client.get('/')
-
-    @task(2)
-    def heavy_url(self):
-        self.client.get('/heavy_url/')
-
-    @task(2)
-    def another_heavy_ajax_url(self):
-        # ajax GET
-        self.client.get('/another_heavy_ajax_url/',
-        headers={'X-Requested-With': 'XMLHttpRequest'})
-
-
-class WebsiteUser(HttpLocust):
-    task_set = UserBehavior
+    def task_2(self):
+        self.client.post("http://localhost:8000/predict")
