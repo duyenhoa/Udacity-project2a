@@ -1,4 +1,4 @@
-[![Build Status](https://dev.azure.com/yenhoainfra0872/Flask-ML-Deploy/_apis/build/status/duyenhoa.Udacity-project2a?branchName=main)](https://dev.azure.com/yenhoainfra0872/Flask-ML-Deploy/_build/latest?definitionId=3&branchName=main)
+![Udacity-project2a](https://github.com/duyenhoa/Udacity-project2a/blob/main/.github/workflows/main_yenhoaudacity.yml/badge.svg)
 # Overview
 
 <TODO: complete this with an overview of your project>
