@@ -1,4 +1,4 @@
-![Udacity-project2a](https://github.com/duyenhoa/Udacity-project2a/actions/workflows/main_yenhoaudacity.yml/badge.svg)
+
 # Overview
 
 <TODO: complete this with an overview of your project>
