@@ -1,95 +1,41 @@
-# Python to Linux Web App on Azure
-# Build your Python project and deploy it to Azure as a Linux Web App.
-# Change python version to one thats appropriate for your application.
-# https://docs.microsoft.com/azure/devops/pipelines/languages/python
+# Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
+# More GitHub Actions for Azure: https://github.com/Azure/actions
+# More info on Python, GitHub Actions, and Azure App Service: https://aka.ms/python-webapps-actions
 
-trigger:
-- main
+name: Build and deploy Python app to Azure Web App - hoaUdacityproject1
 
-pool: myAgentPoolExample
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
 
-variables:
-  # Azure Resource Manager connection created during pipeline creation
-  azureServiceConnectionId: 'ddf5fde9-c491-4e7a-9d28-7a84061dfbc7'
+jobs:
+  build:
+    runs-on: ubuntu-latest
 
-  # Web app name
-  webAppName: 'hoaUdacityproject1'
-
-  # Agent VM image name
-  vmImageName: 'ubuntu-latest'
-
-  # Environment name
-  environmentName: 'hoaUdacityproject1'
-
-  # Project root folder. Point to the folder containing manage.py file.
-  projectRoot: $(System.DefaultWorkingDirectory)
-
-  # Python version: 3.7
-  pythonVersion: '3.7'
-
-stages:
-- stage: Build
-  displayName: Build stage
-  jobs:
-  - job: BuildJob
-    pool:
-      name: myAgentPoolExample
     steps:
-    - task: UsePythonVersion@0
-      inputs:
-        versionSpec: '$(pythonVersion)'
-        addToPath: true
-        architecture: 'x64'
-      displayName: 'Use Python $(pythonVersion)'
+      - uses: actions/checkout@v2
 
-    - script: |
-        python3.7 -m venv antenv
-        source antenv/bin/activate
-        sudo apt install python3.7 -y
-        python3.7 -m pip install --upgrade pip
-        python3.7 -m pip install wheel
-        pip install --upgrade setuptools pip wheel
-        pip install gensim
-        pip install pandas
-        pip install -r requirements.txt
-      workingDirectory: $(projectRoot)
-      displayName: "Install requirements"
+      - name: Set up Python version
+        uses: actions/setup-python@v1
+        with:
+          python-version: '3.7'
 
-    - task: ArchiveFiles@2
-      displayName: 'Archive files'
-      inputs:
-        rootFolderOrFile: '$(projectRoot)'
-        includeRootFolder: false
-        archiveType: zip
-        archiveFile: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
-        replaceExistingArchive: true
-
-    - upload: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
-      displayName: 'Upload package'
-      artifact: drop
-
-- stage: Deploy
-  displayName: 'Deploy Web App'
-  dependsOn: Build
-  condition: succeeded()
-  jobs:
-  - deployment: DeploymentJob
-    pool:
-      name: myAgentPoolExample
-    environment: $(environmentName)
-    strategy:
-      runOnce:
-        deploy:
-          steps:
-
-          - task: UsePythonVersion@0
-            inputs:
-              versionSpec: '$(pythonVersion)'
-            displayName: 'Use Python version'
-
-          - task: AzureWebApp@1
-            displayName: 'Deploy Azure Web App : hoaUdacityproject1'
-            inputs:
-              azureSubscription: $(azureServiceConnectionId)
-              appName: $(webAppName)
-              package: $(Pipeline.Workspace)/drop/$(Build.BuildId).zip
+      - name: Create and start virtual environment
+        run: |
+          python -m venv venv
+          source venv/bin/activate
+      
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+        
+      - name: lint with pylint
+        run: |
+          make lint
+          
+      - name: test with pytest
+        run: |
+          make test
+        
+        
